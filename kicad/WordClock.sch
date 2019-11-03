@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:WordClock-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -48,23 +47,23 @@ F 3 "~" H 4150 3500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L barn53_KiCad:ESP-12E U3
+L barn53-kicad:ESP-12E U3
 U 1 1 5DB8646D
 P 8400 2200
 F 0 "U3" H 8400 3181 50  0000 C CNN
 F 1 "ESP-12E" H 8400 3090 50  0000 C CNN
-F 2 "barn53_KiCad:ESP-12E" H 8400 2200 50  0001 C CNN
+F 2 "barn53-kicad:ESP-12E" H 8400 2200 50  0001 C CNN
 F 3 "http://wiki.ai-thinker.com/_media/esp8266/esp8266_series_modules_user_manual_v1.1.pdf" H 8050 2300 50  0001 C CNN
 	1    8400 2200
 	1    0    0    -1  
 $EndComp
 $Comp
-L barn53_KiCad:USB_B_Micro J1
+L barn53-kicad:USB_B_Micro J1
 U 1 1 5DB8FF43
 P 1850 6350
 F 0 "J1" H 1907 6817 50  0000 C CNN
 F 1 "USB_B_Micro" H 1907 6726 50  0000 C CNN
-F 2 "barn53_KiCad:MicroUSB_1" H 2000 6300 50  0001 C CNN
+F 2 "barn53-kicad:MicroUSB_1" H 2000 6300 50  0001 C CNN
 F 3 "~" H 2000 6300 50  0001 C CNN
 	1    1850 6350
 	1    0    0    -1  
@@ -92,12 +91,12 @@ F 3 "http://www.unisonic.com.tw/datasheet/S8050.pdf" H 3400 4000 50  0001 L CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L barn53_KiCad:MicrowaveRadarSensorRCWL-0516 M1
+L barn53-kicad:MicrowaveRadarSensorRCWL-0516 M1
 U 1 1 5DB97EAC
 P 7450 4750
 F 0 "M1" H 9128 4596 50  0000 L CNN
 F 1 "MicrowaveRadarSensorRCWL-0516" H 9128 4505 50  0000 L CNN
-F 2 "barn53_KiCad:MicrowaveRadarSensorRCWL-0516" H 8375 4075 50  0001 C CNN
+F 2 "barn53-kicad:MicrowaveRadarSensorRCWL-0516" H 8375 4075 50  0001 C CNN
 F 3 "" H 7600 4900 50  0001 C CNN
 	1    7450 4750
 	1    0    0    -1  
@@ -834,7 +833,7 @@ U 1 1 5DCB684C
 P 6150 2000
 F 0 "J2" H 6068 1775 50  0000 C CNN
 F 1 "Conn_01x01" H 6068 1866 50  0000 C CNN
-F 2 "barn53_KiCad:ThroughHolePin1x1" H 6150 2000 50  0001 C CNN
+F 2 "barn53-kicad:ThroughHolePin1x1" H 6150 2000 50  0001 C CNN
 F 3 "~" H 6150 2000 50  0001 C CNN
 	1    6150 2000
 	-1   0    0    1   
@@ -845,7 +844,7 @@ U 1 1 5DCB78A4
 P 6150 2350
 F 0 "J3" H 6068 2125 50  0000 C CNN
 F 1 "Conn_01x01" H 6068 2216 50  0000 C CNN
-F 2 "barn53_KiCad:ThroughHolePin1x1" H 6150 2350 50  0001 C CNN
+F 2 "barn53-kicad:ThroughHolePin1x1" H 6150 2350 50  0001 C CNN
 F 3 "~" H 6150 2350 50  0001 C CNN
 	1    6150 2350
 	-1   0    0    1   
