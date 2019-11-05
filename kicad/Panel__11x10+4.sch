@@ -583,7 +583,7 @@ Wire Wire Line
 Wire Wire Line
 	3150 4350 3250 4350
 Text GLabel 1000 4350 0    50   Input ~ 0
-RxD
+TxD
 Wire Wire Line
 	1000 4350 1150 4350
 $Comp
