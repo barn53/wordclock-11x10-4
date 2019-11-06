@@ -3,6 +3,8 @@
 
 .DS_Store
 
+*.step
+
 # Temporary files
 *.000
 *.bak
