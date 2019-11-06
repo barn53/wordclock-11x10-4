@@ -4,6 +4,7 @@
 .DS_Store
 
 *.step
+*.wrl
 
 # Temporary files
 *.000
