@@ -472,7 +472,7 @@ Text GLabel 2450 4000 0    50   Input ~ 0
 DTR
 Text GLabel 2450 4650 0    50   Input ~ 0
 RTS
-Text GLabel 4300 3750 2    50   Input ~ 0
+Text GLabel 4900 3750 2    50   Input ~ 0
 Reset
 Text GLabel 4900 4900 2    50   Input ~ 0
 GPIO0
@@ -527,7 +527,7 @@ Wire Wire Line
 	4150 3650 4150 3750
 Connection ~ 4150 3750
 Wire Wire Line
-	4150 3750 4300 3750
+	4150 3750 4900 3750
 Wire Wire Line
 	4150 3750 4150 3850
 Wire Wire Line
