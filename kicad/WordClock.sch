@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:WordClock-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -908,23 +909,23 @@ L 74xGxx:74AHC1G08 U4
 U 1 1 5DC52E5C
 P 6750 3500
 F 0 "U4" H 6600 3650 50  0000 C CNN
-F 1 "74AHC1G08" H 6450 3300 50  0000 C CNN
+F 1 "74AHC1G08" H 7050 3350 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-353_SC-70-5" H 6750 3500 50  0001 C CNN
 F 3 "http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf" H 6750 3500 50  0001 C CNN
 	1    6750 3500
 	1    0    0    -1  
 $EndComp
-Text GLabel 6300 3450 0    50   Input ~ 0
+Text GLabel 6150 3450 0    50   Input ~ 0
 TxD
 Wire Wire Line
-	6300 3450 6450 3450
+	6150 3450 6450 3450
 Text GLabel 7150 3500 2    50   Input ~ 0
 DIn
 Wire Wire Line
 	7000 3500 7150 3500
 Wire Wire Line
 	6450 3550 6300 3550
-Text GLabel 6300 3550 0    50   Input ~ 0
+Text GLabel 6150 3550 0    50   Input ~ 0
 GPIO5
 Text GLabel 9150 2100 2    50   Input ~ 0
 GPIO5
@@ -978,4 +979,33 @@ F 3 "https://datasheet.lcsc.com/szlcsc/1910111742_MDD-Microdiode-Electronics-S80
 	1    3400 4650
 	1    0    0    1   
 $EndComp
+$Comp
+L Device:R R12
+U 1 1 5DD4F4B1
+P 6300 3850
+F 0 "R12" H 6370 3896 50  0000 L CNN
+F 1 "10k" H 6370 3805 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 6230 3850 50  0001 C CNN
+F 3 "~" H 6300 3850 50  0001 C CNN
+	1    6300 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR03
+U 1 1 5DD507B8
+P 6300 4100
+F 0 "#PWR03" H 6300 3850 50  0001 C CNN
+F 1 "GND" H 6305 3927 50  0000 C CNN
+F 2 "" H 6300 4100 50  0001 C CNN
+F 3 "" H 6300 4100 50  0001 C CNN
+	1    6300 4100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6300 4100 6300 4000
+Wire Wire Line
+	6300 3700 6300 3550
+Connection ~ 6300 3550
+Wire Wire Line
+	6300 3550 6150 3550
 $EndSCHEMATC
