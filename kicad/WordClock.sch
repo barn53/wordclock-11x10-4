@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:WordClock-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -7,8 +6,8 @@ encoding utf-8
 Sheet 1 2
 Title "WordClock Microprocessor"
 Date "2019-10-28"
-Rev "A"
-Comp ""
+Rev "B"
+Comp "bwarn53.de"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -56,28 +55,6 @@ F 1 "USB_B_Micro" H 1907 6726 50  0000 C CNN
 F 2 "barn53-kicad:MicroUSB_1" H 2000 6300 50  0001 C CNN
 F 3 "~" H 2000 6300 50  0001 C CNN
 	1    1850 6350
-	1    0    0    -1  
-$EndComp
-$Comp
-L Transistor_BJT:S8050 Q2
-U 1 1 5DB93A78
-P 3400 4650
-F 0 "Q2" H 3590 4604 50  0000 L CNN
-F 1 "S8050" H 3590 4695 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 3600 4575 50  0001 L CIN
-F 3 "http://www.unisonic.com.tw/datasheet/S8050.pdf" H 3400 4650 50  0001 L CNN
-	1    3400 4650
-	1    0    0    1   
-$EndComp
-$Comp
-L Transistor_BJT:S8050 Q1
-U 1 1 5DB94616
-P 3400 4000
-F 0 "Q1" H 3590 4046 50  0000 L CNN
-F 1 "S8050" H 3590 3955 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 3600 3925 50  0001 L CIN
-F 3 "http://www.unisonic.com.tw/datasheet/S8050.pdf" H 3400 4000 50  0001 L CNN
-	1    3400 4000
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -978,5 +955,27 @@ F 2 "" H 6750 3800 50  0001 C CNN
 F 3 "" H 6750 3800 50  0001 C CNN
 	1    6750 3800
 	1    0    0    -1  
+$EndComp
+$Comp
+L barn53-kicad:S8050_J3Y Q1
+U 1 1 5DD5566C
+P 3400 4000
+F 0 "Q1" H 3591 4046 50  0000 L CNN
+F 1 "S8050_J3Y" H 3591 3955 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 3600 3925 50  0001 L CIN
+F 3 "https://datasheet.lcsc.com/szlcsc/1910111742_MDD-Microdiode-Electronics-S8050-J3Y_C364312.pdf" H 3400 4000 50  0001 L CNN
+	1    3400 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L barn53-kicad:S8050_J3Y Q2
+U 1 1 5DD5663A
+P 3400 4650
+F 0 "Q2" H 3591 4604 50  0000 L CNN
+F 1 "S8050_J3Y" H 3591 4695 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 3600 4575 50  0001 L CIN
+F 3 "https://datasheet.lcsc.com/szlcsc/1910111742_MDD-Microdiode-Electronics-S8050-J3Y_C364312.pdf" H 3400 4650 50  0001 L CNN
+	1    3400 4650
+	1    0    0    1   
 $EndComp
 $EndSCHEMATC
