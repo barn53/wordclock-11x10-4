@@ -1,11 +1,11 @@
 EESchema Schematic File Version 4
-LIBS:WordClock-cache
+LIBS:controller-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 2
-Title "WordClock Microprocessor"
+Title "WordClock Controller"
 Date "2019-10-28"
 Rev "B"
 Comp "bwarn53.de"
@@ -788,10 +788,10 @@ Wire Wire Line
 Wire Wire Line
 	8100 5300 8100 5200
 $Sheet
-S 8400 8550 1100 500 
+S 9400 3800 1100 500 
 U 5DB9F213
-F0 "Panel__11x10+4" 50
-F1 "Panel__11x10+4.sch" 50
+F0 "LEDs" 50
+F1 "controller_leds.sch" 50
 $EndSheet
 $Comp
 L Device:LED D2
