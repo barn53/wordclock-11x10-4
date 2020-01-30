@@ -13,6 +13,7 @@
 - Design 18x18cm clock for desk e.g. usage
 - Tinted Plexiglass®
 - PCB - discrete with ESP8285?
+- 3mm WS2812?
 - also 3D printed reflector?
 - Mount PCB with screws
 - can stand on desk
