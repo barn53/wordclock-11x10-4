@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bitter&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>WortUhr</title>
+</head>
+
+<body>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">WortUhr</h1>
+            <p class="lead">WortUhr Debug Werte</p>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <div class="col-sm-2 sidenav">
+                <p><a href="/">Einstellungen</a></p>
+                <p><a href="/debug.html">Debug</a></p>
+            </div>
+            <div class="col-sm-8 text-left">
+                <h3>Zeitinformationen</h3>
+                <p><b>Datum/Zeit:</b> <span id="datetime">...</span></p>
+                <p><span id="lasttext">...</span></p>
+                <p><b>Zeitzone:</b> <span id="timezone">...</span></p>
+                <p><b>Letzte Synchronisation:</b> <span id="lastsync">...</span></p>
+                <hr>
+                <h3>Aktueller Helligkeitswert</h3>
+                <p><b>Messung:</b> <span id="measure">...</span></p>
+                <p><b>Pixel Wert:</b> <span id="pixel">...</span></p>
+                <hr>
+                <h3>Display</h3>
+                <p><b>Pixel Strom:</b> <span id="pixelcurren">...</span></p>
+                <hr>
+                <h3>Bewegungen</h3>
+                <p><b>Aktive Bewegungen:</b> <span id="captures">...</span></p>
+                <p><b>Aktive Restzeit:</b> <span id="remaining">...</span></p>
+                <hr>
+                <h3>Konnektivität WiFi</h3>
+                <p><b>IP:</b> <span id="ip">...</span>, <b>Host</b>: <span id="host">...</span></p>
+                <p><b>Signalstärke:</b> <span id="rssi">...</span></p>
+                <hr>
+            </div>
+            <div class="col-sm-2 sidenav">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+
+        function every1Sec() {
+            $.get("/action/get_brightness", function (data) {
+                $("#measure").empty().append(data);
+            })
+            $.get("/action/get_pixelvalue", function (data) {
+                $("#pixel").empty().append(data);
+            })
+            $.get("/action/get_num_captures", function (data) {
+                $("#captures").empty().append(data);
+            })
+            $.get("/action/get_remaining_time", function (data) {
+                $("#remaining").empty().append(data);
+            })
+            $.get("/action/get_datetime", function (data) {
+                $("#datetime").empty().append(data);
+            })
+        }
+        function every10Sec() {
+            $.get("/action/get_rssi", function (data) {
+                $("#rssi").empty().append(data);
+            })
+            $.get("/action/get_lasttext", function (data) {
+                $("#lasttext").empty().append(data);
+            })
+            $.get("/action/get_pixelcurrent", function (data) {
+                $("#pixelcurren").empty().append(data);
+            })
+        }
+        function every3600Sec() {
+            $.get("/action/get_lastsync", function (data) {
+                $("#lastsync").empty().append(data);
+            })
+        }
+        function once() {
+            $.get("/action/get_ip", function (data) {
+                $("#ip").empty().append(data);
+            })
+            $.get("/action/get_host", function (data) {
+                $("#host").empty().append(data);
+            })
+            $.get("/action/get_timezone", function (data) {
+                $("#timezone").empty().append(data);
+            })
+        }
+
+        setInterval(every1Sec, 1000)
+        setInterval(every10Sec, 10000)
+        setInterval(every3600Sec, 3600000)
+
+        $(document).ready(function () {
+            every1Sec()
+            every10Sec()
+            every3600Sec()
+            once()
+        })
+
+    </script>
+</body>
+
+</html>

@@ -16,6 +16,6 @@
 - 3mm WS2812?
 - also 3D printed reflector?
 - Mount PCB with screws
-- can stand on desk
+- can stand on desk or hang on wall
 
 
