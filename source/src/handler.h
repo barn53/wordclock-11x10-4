@@ -5,17 +5,24 @@ class Brightness;
 class Motion;
 class Text;
 class Display;
+class Settings;
 
 class Handler {
 public:
-    Handler(const Brightness& brightness, const Motion& motion, const Text& text, const Display& display);
+    Handler(Brightness& brightness, Motion& motion, Text& text, Display& display, Settings& settings);
 
-    bool handleAction(const String& path);
-    bool handleFileRead(const String& path);
+    bool handleAction(const String& path) const;
+
+    static bool handleFileRead(const String& path);
 
 private:
-    const Brightness& m_brightness;
-    const Motion& m_motion;
-    const Text& m_text;
-    const Display& m_display;
+    bool handleSet(const String& action) const;
+    bool handleGet(const String& action) const;
+    bool handleDo(const String& action) const;
+
+    Brightness& m_brightness;
+    Motion& m_motion;
+    Text& m_text;
+    Display& m_display;
+    Settings& m_settings;
 };

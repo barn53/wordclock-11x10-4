@@ -1,16 +1,22 @@
 #include "brightness.h"
+#include "settings.h"
 #include <algorithm>
 
 using namespace std;
 
+Brightness::Brightness(Settings& settings)
+    : m_settings(settings)
+{
+}
+
 void Brightness::loop()
 {
-    if (millis() - m_last_measure > MEASURE_INTERVAL_MILLIS) {
+    if (millis() - m_last_measure_time > MEASURE_INTERVAL_MILLIS) {
         m_measures.emplace_back(analogRead(A0));
         while (m_measures.size() > MEASURES_MAX_AMOUNT) {
             m_measures.pop_front();
         }
-        m_last_measure = millis();
+        m_last_measure_time = millis();
     }
 }
 
@@ -25,20 +31,30 @@ uint16_t Brightness::getMedMeasure() const
     return med;
 }
 
-uint8_t Brightness::pixelBrightness() const
+uint16_t Brightness::pixelBrightness() const
 {
-    auto med(getMedMeasure());
+    auto x(getMedMeasure());
     // The darker the ambient, the higher the number,
     //  the darker the ouput.
-    if (med < 350) {
-        return numeric_limits<uint8_t>::max();
-    } else if (med < 450) {
-        return 150;
-    } else if (med < 700) {
-        return 100;
-    } else {
-        return 50;
+
+    double m(-1 / 3.);
+    int16_t c(270);
+    int16_t b(m * x + c);
+    b = min<int16_t>(b, 255);
+    b = max<int16_t>(b, 30);
+
+    if (m_last_pixel_brightness != b) {
+        m_changed = true;
+        m_last_pixel_brightness = b;
     }
+    return b;
+}
+
+bool Brightness::changed() const
+{
+    bool was(m_changed);
+    m_changed = false;
+    return was;
 }
 
 void Brightness::print() const

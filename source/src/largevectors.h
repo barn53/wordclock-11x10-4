@@ -1,10 +1,10 @@
 #pragma once
-#include "large.h"
+#include "largedigits.h"
 #include <Arduino.h>
 using namespace std;
 
 // clang-format off
-vector<bool> Large::m_0 = {
+vector<bool> LargeDigits::m_0 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    0,1,1,1,0,0,0,0,0,0,0,   // 1
@@ -18,7 +18,7 @@ vector<bool> Large::m_0 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_1 = {
+vector<bool> LargeDigits::m_1 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    0,0,1,0,0,0,0,0,0,0,0,   // 1
@@ -32,7 +32,7 @@ vector<bool> Large::m_1 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_2 = {
+vector<bool> LargeDigits::m_2 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    0,1,1,1,0,0,0,0,0,0,0,   // 1
@@ -46,7 +46,7 @@ vector<bool> Large::m_2 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_3 = {
+vector<bool> LargeDigits::m_3 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    0,1,1,1,0,0,0,0,0,0,0,   // 1
@@ -60,7 +60,7 @@ vector<bool> Large::m_3 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_4 = {
+vector<bool> LargeDigits::m_4 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    0,0,0,1,0,0,0,0,0,0,0,   // 1
@@ -74,7 +74,7 @@ vector<bool> Large::m_4 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_5 = {
+vector<bool> LargeDigits::m_5 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    1,1,1,1,1,0,0,0,0,0,0,   // 1
@@ -88,7 +88,7 @@ vector<bool> Large::m_5 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_6 = {
+vector<bool> LargeDigits::m_6 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    0,0,0,1,1,0,0,0,0,0,0,   // 1
@@ -102,7 +102,7 @@ vector<bool> Large::m_6 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_7 = {
+vector<bool> LargeDigits::m_7 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    1,1,1,1,1,0,0,0,0,0,0,   // 1
@@ -116,7 +116,7 @@ vector<bool> Large::m_7 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_8 = {
+vector<bool> LargeDigits::m_8 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    0,1,1,1,0,0,0,0,0,0,0,   // 1
@@ -130,7 +130,7 @@ vector<bool> Large::m_8 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_9 = {
+vector<bool> LargeDigits::m_9 = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,0,0,0,0,0,0,0,   // 0
    0,1,1,1,0,0,0,0,0,0,0,   // 1
@@ -144,7 +144,7 @@ vector<bool> Large::m_9 = {
    0,0,0,0,0,0,0,0,0,0,0,   // 9
 };
 
-vector<bool> Large::m_question = {
+vector<bool> LargeDigits::m_question = {
 // 0 1 2 3 4 5 6 7 8 9 10
    0,0,0,0,1,1,1,1,0,0,0,   // 0
    0,0,0,1,1,0,0,1,1,0,0,   // 1

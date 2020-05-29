@@ -1,4 +1,5 @@
 #include "deutsch.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -31,20 +32,16 @@ void Language::randomizeVariants()
     m_variant_schwaebisch_viertel = random(2);
 }
 
-void Language::createText(string& text, uint8_t& minIndicator, time_t startTime)
+void Language::createText(string& text, time_t startTime)
 {
     if (millis() - m_last_change_variants > (1 * 60 * 1000)) {
         randomizeVariants();
         m_last_change_variants = millis();
     }
 
-    time_t t(startTime + (millis() / 1000));
-    tm* currentTime(localtime(&t));
-
-    auto& hour(currentTime->tm_hour);
-    auto& minute(currentTime->tm_min);
-
-    minIndicator = minute % 5;
+    int hour;
+    int minute;
+    getHourMinuteForCurrentTimeFromStartTime(startTime, hour, minute);
 
     if (m_variant_es_ist) {
         text = "ES IST ";
@@ -75,7 +72,7 @@ void Language::createText(string& text, uint8_t& minIndicator, time_t startTime)
         text.append("FuNF NACH HALB ");
         ++hour;
     } else if (minute >= 40 && minute < 45) {
-        text.append("ZEHN NACH HALB ");
+        text.append("ZWANZIG VOR ");
         ++hour;
     } else if (minute >= 45 && minute < 50) {
         if (m_variant_schwaebisch_viertel) {

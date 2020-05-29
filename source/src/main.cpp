@@ -1,9 +1,12 @@
 #include "brightness.h"
 #include "display.h"
 #include "handler.h"
-#include "large.h"
+#include "largedigits.h"
 #include "motion.h"
+#include "settings.h"
+#include "tetris.h"
 #include "text.h"
+#include "utils.h"
 #include "wifi.h"
 
 #include <Arduino.h>
@@ -21,13 +24,15 @@ ESP8266WebServer server(80); // Create a webserver object that listens for HTTP 
 // https://arduinojson.org/v6/assistant/
 DynamicJsonDocument timeDoc(JSON_OBJECT_SIZE(15) + 350);
 String timezone;
+bool dst;
 
-Brightness brightness;
+LargeDigits largeDigits;
+Settings settings;
 Motion motion;
-Text text;
-Large large;
-Display display;
-Handler handler(brightness, motion, text, display);
+Brightness brightness(settings);
+Text text(settings);
+Display display(settings);
+Handler handler(brightness, motion, text, display, settings);
 
 void printTime()
 {
@@ -48,10 +53,10 @@ void setup()
 
     const auto& indexes(text.indexesForText("WLAN"));
     display.begin();
-    display.toPixels(indexes, RgbColor(0xff, 0x30, 0xcc));
+    display.toPixelsSingleColor(indexes, RgbColor(0xff, 0x30, 0xcc));
 
     setupWiFi();
-    getTime(timeDoc, text.getMutableStartTime(), timezone);
+    getTime(timeDoc, text.getMutableStartTime(), timezone, dst);
 
     server.onNotFound([]() { // If the client requests any URI
         if (!handler.handleAction(server.uri())
@@ -70,7 +75,7 @@ void loop()
 {
 #if 0
     for (auto ii = 0; ii < 101; ++ii) {
-        display.toPixels(large.get(ii), RgbColor(0x00, 0xee, 0xff));
+        display.toPixels(largeDigits.get(ii), RgbColor(0x00, 0xee, 0xff));
         delay(300);
     }
     return;
@@ -80,15 +85,24 @@ void loop()
 
     motion.loop();
     brightness.loop();
+    display.loop();
 
-    if (motion.isActive()) {
-        const auto& indexes(text.indexesForCurrentTime());
-        if (text.changed() || display.isCleared()) {
-            // display.toSerial(indexes, text.getLetters());
-            display.toPixels(indexes, brightness.pixelBrightness());
-            Serial.print(">");
-        }
+    if (false /* tetris */) {
+        // :-(
     } else {
-        display.clear();
+        if (motion.isActive()) {
+            const auto& indexes(text.indexesForCurrentTime());
+            auto bness(brightness.pixelBrightness());
+            if (text.changed()
+                || brightness.changed()
+                || settings.changed()
+                || display.isCleared()) {
+                // display.toSerial(indexes, text.getLetters());
+                display.toPixels(indexes, bness);
+                Serial.print(">");
+            }
+        } else {
+            display.clear();
+        }
     }
 }

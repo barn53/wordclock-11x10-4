@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bitter&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>WortUhr</title>
+    <title>WortUhr | Debug</title>
 </head>
 
 <body>
@@ -24,29 +24,40 @@
         <div class="row content">
             <div class="col-sm-2 sidenav">
                 <p><a href="/">Einstellungen</a></p>
+                <p><a href="/tetris.html">Tetris</a></p>
                 <p><a href="/debug.html">Debug</a></p>
             </div>
             <div class="col-sm-8 text-left">
                 <h3>Zeitinformationen</h3>
-                <p><b>Datum/Zeit:</b> <span id="datetime">...</span></p>
-                <p><span id="lasttext">...</span></p>
-                <p><b>Zeitzone:</b> <span id="timezone">...</span></p>
-                <p><b>Letzte Synchronisation:</b> <span id="lastsync">...</span></p>
+                <p><b>Datum/Zeit:</b> <span id="datetime" class="1sec">...</span></p>
+                <p><span id="lasttext" class="10sec">...</span></p>
+                <p><b>Zeitzone:</b> <span id="timezone" class="once">...</span></p>
+                <p><b>Sommerzeit:</b> <span id="dst" class="once">...</span></p>
+                <p><b>Letzte Synchronisation:</b> <span id="lastsync" class="3600sec">...</span></p>
                 <hr>
-                <h3>Aktueller Helligkeitswert</h3>
-                <p><b>Messung:</b> <span id="measure">...</span></p>
-                <p><b>Pixel Wert:</b> <span id="pixel">...</span></p>
+                <h3>Helligkeit</h3>
+                <p><b>Messung:</b> <span id="brightness" class="1sec">...</span></p>
+                <p><b>Pixel Wert:</b> <span id="pixelbrightness" class="1sec">...</span></p>
                 <hr>
                 <h3>Display</h3>
-                <p><b>Pixel Strom:</b> <span id="pixelcurren">...</span></p>
+                <p><b>Pixel Strom:</b> <span id="pixelcurrent" class="10sec">...</span></p>
+                <p><b>Abgeschaltet:</b> <span id="clearedcounter" class="60sec">...</span></p>
+                <p><b>Arbeit:</b> <span id="kwh" class="60sec">...</span></p>
                 <hr>
                 <h3>Bewegungen</h3>
-                <p><b>Aktive Bewegungen:</b> <span id="captures">...</span></p>
-                <p><b>Aktive Restzeit:</b> <span id="remaining">...</span></p>
+                <p><b>Sensor:</b> <span id="motionsensor" class="200msec">...</span>
+                </p>
+                <p><b>Aktive Bewegungen:</b> <span id="num_captures" class="1sec">...</span></p>
+                <p><b>Aktive Restzeit:</b> <span id="remaining_time" class="1sec">...</span></p>
+                <p><b>Anzahl:</b> <span id="count_captures" class="10sec">...</span></p>
+                <p><b>Max. Anzahl gleichzeitig:</b> <span id="max_captures" class="60sec">...</span></p>
+                <button type="button" class="btn btn-info btn-sm do" id="reset_motion">reset</button>
+                <button type="button" class="btn btn-info btn-sm do" id="queue_capture">simulieren</button>
                 <hr>
                 <h3>Konnektivität WiFi</h3>
-                <p><b>IP:</b> <span id="ip">...</span>, <b>Host</b>: <span id="host">...</span></p>
-                <p><b>Signalstärke:</b> <span id="rssi">...</span></p>
+                <p><b>IP:</b> <span id="ip" class="once">...</span>, <b>Host</b>: <span id="host"
+                        class="once">...</span></p>
+                <p><b>Signalstärke:</b> <span id="rssi" class="60sec">...</span></p>
                 <hr>
             </div>
             <div class="col-sm-2 sidenav">
@@ -59,61 +70,63 @@
 
     <script type="text/javascript">
 
-        function every1Sec() {
-            $.get("/action/get_brightness", function (data) {
-                $("#measure").empty().append(data);
-            })
-            $.get("/action/get_pixelvalue", function (data) {
-                $("#pixel").empty().append(data);
-            })
-            $.get("/action/get_num_captures", function (data) {
-                $("#captures").empty().append(data);
-            })
-            $.get("/action/get_remaining_time", function (data) {
-                $("#remaining").empty().append(data);
-            })
-            $.get("/action/get_datetime", function (data) {
-                $("#datetime").empty().append(data);
-            })
-        }
-        function every10Sec() {
-            $.get("/action/get_rssi", function (data) {
-                $("#rssi").empty().append(data);
-            })
-            $.get("/action/get_lasttext", function (data) {
-                $("#lasttext").empty().append(data);
-            })
-            $.get("/action/get_pixelcurrent", function (data) {
-                $("#pixelcurren").empty().append(data);
-            })
-        }
-        function every3600Sec() {
-            $.get("/action/get_lastsync", function (data) {
-                $("#lastsync").empty().append(data);
-            })
-        }
-        function once() {
-            $.get("/action/get_ip", function (data) {
-                $("#ip").empty().append(data);
-            })
-            $.get("/action/get_host", function (data) {
-                $("#host").empty().append(data);
-            })
-            $.get("/action/get_timezone", function (data) {
-                $("#timezone").empty().append(data);
+        function actionGet(action) {
+            $.get("/action/get/" + action, function (data) {
+                $("#" + action).empty().append(data);
             })
         }
 
+        function every200MSec() {
+            $('.200msec').each(function () {
+                actionGet(this.id)
+            })
+        }
+        function every1Sec() {
+            $('.1sec').each(function () {
+                actionGet(this.id)
+            })
+        }
+        function every10Sec() {
+            $('.10sec').each(function () {
+                actionGet(this.id)
+            })
+        }
+        function every60Sec() {
+            $('.60sec').each(function () {
+                actionGet(this.id)
+            })
+        }
+        function every3600Sec() {
+            $('.3600sec').each(function () {
+                actionGet(this.id)
+            })
+        }
+        function once() {
+            $('.once').each(function () {
+                actionGet(this.id)
+            })
+        }
+
+        setInterval(every200MSec, 200)
         setInterval(every1Sec, 1000)
         setInterval(every10Sec, 10000)
+        setInterval(every60Sec, 60000)
         setInterval(every3600Sec, 3600000)
 
         $(document).ready(function () {
             every1Sec()
             every10Sec()
+            every60Sec()
             every3600Sec()
             once()
+
+            $('.do').off().click(function (e) {
+                let id = e.target.id // https://www.pluralsight.com/guides/javascript-callbacks-variable-scope-problem#module-es6
+                $.get("/action/do/" + id, function (data) {
+                })
+            })
         })
+
 
     </script>
 </body>

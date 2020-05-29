@@ -4,7 +4,7 @@
 class Language {
 public:
     Language();
-    void createText(std::string& text, uint8_t& minIndicator, time_t startTime);
+    void createText(std::string& text, time_t startTime);
 
     static const std::string& getLetters() { return m_letters; }
 
