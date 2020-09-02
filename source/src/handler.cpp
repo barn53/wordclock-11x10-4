@@ -4,12 +4,14 @@
 #include "motion.h"
 #include "settings.h"
 #include "text.h"
+#include "utils.h"
 
 #include <ESP8266WebServer.h>
 #include <FS.h>
 // #include <LittleFS.h>
 
 extern ESP8266WebServer server;
+extern time_t startTime;
 extern String timezone;
 extern bool dst;
 
@@ -65,6 +67,26 @@ bool Handler::handleDo(const String& action) const
     } else if (action == "display_clear") {
         m_motion.reset();
         m_display.clear();
+        server.send(200, "text/plain", "1");
+        return true;
+    } else if (action == "sync_time") {
+        syncTime(startTime, timezone, dst);
+        server.send(200, "text/plain", "1");
+        return true;
+    } else if (action == "+1h") {
+        startTime += 3600;
+        server.send(200, "text/plain", "1");
+        return true;
+    } else if (action == "-1h") {
+        startTime -= 3600;
+        server.send(200, "text/plain", "1");
+        return true;
+    } else if (action == "+1min") {
+        startTime += 60;
+        server.send(200, "text/plain", "1");
+        return true;
+    } else if (action == "-1min") {
+        startTime -= 60;
         server.send(200, "text/plain", "1");
         return true;
     }
@@ -140,7 +162,7 @@ bool Handler::handleGet(const String& action) const
         server.send(200, "text/plain", s + " s");
         return true;
     } else if (action == "datetime") {
-        server.send(200, "text/plain", toDateTime(m_text.getStartTime() + (millis() / 1000)));
+        server.send(200, "text/plain", toDateTime(startTime + (millis() / 1000)));
         return true;
     } else if (action == "lasttext") {
         String text;
@@ -158,7 +180,7 @@ bool Handler::handleGet(const String& action) const
         server.send(200, "text/plain", text);
         return true;
     } else if (action == "lastsync") {
-        server.send(200, "text/plain", toDateTime(m_text.getStartTime()));
+        server.send(200, "text/plain", toDateTime(startTime));
         return true;
     } else if (action == "timezone") {
         server.send(200, "text/plain", timezone);

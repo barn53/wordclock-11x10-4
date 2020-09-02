@@ -21,8 +21,7 @@ using namespace std;
 
 ESP8266WebServer server(80); // Create a webserver object that listens for HTTP request on port 80
 
-// https://arduinojson.org/v6/assistant/
-DynamicJsonDocument timeDoc(JSON_OBJECT_SIZE(15) + 350);
+time_t startTime;
 String timezone;
 bool dst;
 
@@ -36,14 +35,13 @@ Handler handler(brightness, motion, text, display, settings);
 
 void printTime()
 {
-    time_t t(text.getStartTime() + (millis() / 1000));
+    time_t t(startTime + (millis() / 1000));
     tm* currentTime(localtime(&t));
     Serial.printf("%u.%u.%u %02u:%02u:%02u\n",
         currentTime->tm_mday, currentTime->tm_mon + 1, currentTime->tm_year + 1900,
         currentTime->tm_hour, currentTime->tm_min, currentTime->tm_sec);
 }
 
-uint32_t lastUpdate;
 void setup()
 {
     Serial.begin(115200);
@@ -56,7 +54,7 @@ void setup()
     display.toPixelsSingleColor(indexes, RgbColor(0xff, 0x30, 0xcc));
 
     setupWiFi();
-    getTime(timeDoc, text.getMutableStartTime(), timezone, dst);
+    syncTime(startTime, timezone, dst);
 
     server.onNotFound([]() { // If the client requests any URI
         if (!handler.handleAction(server.uri())

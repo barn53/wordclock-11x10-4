@@ -2,6 +2,7 @@
 
 #include <NeoPixelAnimator.h>
 #include <NeoPixelBus.h>
+#include <bitset>
 #include <string>
 #include <vector>
 
@@ -24,13 +25,13 @@ public:
     void begin();
 
     void loop();
-    void toPixels(const std::vector<bool>& indexes, uint8_t pixelBrightness);
-    void toPixelsRandomColor(const std::vector<bool>& indexes, uint8_t pixelBrightness, bool words);
-    void toPixelsSingleColor(const std::vector<bool>& indexes, const RgbColor& color);
+    void toPixels(const std::bitset<PIXELS>& indexes, uint8_t pixelBrightness);
+    void toPixelsRandomColor(const std::bitset<PIXELS>& indexes, uint8_t pixelBrightness, bool colorWords);
+    void toPixelsSingleColor(const std::bitset<PIXELS>& indexes, const RgbColor& color);
     bool isCleared() const { return m_cleared; }
     void clear();
 
-    void toSerial(const std::vector<bool>& indexes, const std::string& letters) const;
+    void toSerial(const std::bitset<PIXELS>& indexes, const std::string& letters) const;
     uint32_t pixelCurrent() const;
     double kWh() const;
     uint32_t clearedCounter() const { return m_cleared_counter; }

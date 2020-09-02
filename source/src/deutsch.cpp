@@ -41,7 +41,7 @@ void Language::createText(string& text, time_t startTime)
 
     int hour;
     int minute;
-    getHourMinuteForCurrentTimeFromStartTime(startTime, hour, minute);
+    getHourMinuteForCurrentTimeFromTime(startTime, hour, minute);
 
     if (m_variant_es_ist) {
         text = "ES IST ";

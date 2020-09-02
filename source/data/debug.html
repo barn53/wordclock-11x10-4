@@ -32,8 +32,14 @@
                 <p><b>Datum/Zeit:</b> <span id="datetime" class="1sec">...</span></p>
                 <p><span id="lasttext" class="10sec">...</span></p>
                 <p><b>Zeitzone:</b> <span id="timezone" class="once">...</span></p>
-                <p><b>Sommerzeit:</b> <span id="dst" class="once">...</span></p>
+                <p><b>Sommerzeit:</b> <span id="dst" class="3600sec">...</span></p>
                 <p><b>Letzte Synchronisation:</b> <span id="lastsync" class="3600sec">...</span></p>
+                <p><button type="button" class="btn btn-info btn-sm do" id="sync_time">Synchronisieren</button></p>
+                <p><button type="button" class="btn btn-info btn-sm do" id="-1min">-1min</button>
+                    <button type="button" class="btn btn-info btn-sm do" id="+1min">+1min</button>
+                    &nbsp;&nbsp;<button type="button" class="btn btn-info btn-sm do" id="-1h">-1h</button>
+                    <button type="button" class="btn btn-info btn-sm do" id="+1h">+1h</button>
+                </p>
                 <hr>
                 <h3>Helligkeit</h3>
                 <p><b>Messung:</b> <span id="brightness" class="1sec">...</span></p>
@@ -51,8 +57,8 @@
                 <p><b>Aktive Restzeit:</b> <span id="remaining_time" class="1sec">...</span></p>
                 <p><b>Anzahl:</b> <span id="count_captures" class="10sec">...</span></p>
                 <p><b>Max. Anzahl gleichzeitig:</b> <span id="max_captures" class="60sec">...</span></p>
-                <button type="button" class="btn btn-info btn-sm do" id="reset_motion">reset</button>
-                <button type="button" class="btn btn-info btn-sm do" id="queue_capture">simulieren</button>
+                <p><button type="button" class="btn btn-info btn-sm do" id="reset_motion">reset</button>
+                    <button type="button" class="btn btn-info btn-sm do" id="queue_capture">simulieren</button></p>
                 <hr>
                 <h3>Konnektivität WiFi</h3>
                 <p><b>IP:</b> <span id="ip" class="once">...</span>, <b>Host</b>: <span id="host"
@@ -123,6 +129,10 @@
             $('.do').off().click(function (e) {
                 let id = e.target.id // https://www.pluralsight.com/guides/javascript-callbacks-variable-scope-problem#module-es6
                 $.get("/action/do/" + id, function (data) {
+                    every10Sec()
+                    every60Sec()
+                    every3600Sec()
+                    once()
                 })
             })
         })

@@ -41,8 +41,8 @@ void Display::loop()
 
 double Display::kWh() const
 {
-    uint32_t measuredMinutes((millis() - m_start_time) / 1000 / 60);
-    double measuredHours((measuredMinutes - (measuredMinutes % POWER_MEASURE_INTERVAL_MINUTES)) / static_cast<double>(60));
+    uint32_t measuredMinutes((m_last_kwh_update - m_start_time) / 1000 / 60);
+    double measuredHours(measuredMinutes / static_cast<double>(60));
     return (m_sum_mw * measuredHours) / 1000000;
 }
 
@@ -69,10 +69,11 @@ size_t Display::physicalToIndex(size_t physical)
     return (row * WIDTH + col);
 }
 
-void Display::toPixels(const vector<bool>& indexes, uint8_t pixelBrightness)
+void Display::toPixels(const bitset<PIXELS>& indexes, uint8_t pixelBrightness)
 {
     if (m_settings.useSingleColor()) {
-        RgbColor color(fromString(m_settings.getSingleColor()));
+        string hexColor(m_settings.getSingleColor());
+        RgbColor color(fromString(hexColor));
         color = color.Dim(pixelBrightness);
         colorMinBrightness(color);
         toPixelsSingleColor(indexes, color);
@@ -83,7 +84,7 @@ void Display::toPixels(const vector<bool>& indexes, uint8_t pixelBrightness)
     }
 }
 
-void Display::toPixelsRandomColor(const vector<bool>& indexes, uint8_t pixelBrightness, bool words)
+void Display::toPixelsRandomColor(const bitset<PIXELS>& indexes, uint8_t pixelBrightness, bool colorWords)
 {
     m_cleared = false;
     m_animations.StopAll();
@@ -93,8 +94,8 @@ void Display::toPixelsRandomColor(const vector<bool>& indexes, uint8_t pixelBrig
     int lastIndex(0);
     for (auto index = 0; index < (PIXELS); ++index) {
         if (indexes[index]) {
-            if (!words // letter-wise
-                || (words && index - lastIndex > 1)
+            if (!colorWords // letter-wise
+                || (colorWords && index - lastIndex > 1)
                 || (color.R == 0 && color.G == 0 && color.B == 0)) {
                 color = randomColor();
                 color = color.Dim(pixelBrightness);
@@ -109,7 +110,7 @@ void Display::toPixelsRandomColor(const vector<bool>& indexes, uint8_t pixelBrig
     m_pixels.Show();
 }
 
-void Display::toPixelsSingleColor(const vector<bool>& indexes, const RgbColor& color)
+void Display::toPixelsSingleColor(const bitset<PIXELS>& indexes, const RgbColor& color)
 {
     m_cleared = false;
     m_animations.StopAll();
@@ -131,9 +132,9 @@ uint32_t Display::pixelCurrent() const
     return const_cast<NeoPixelBus<Feature, Neo800KbpsMethod>&>(m_pixels).CalcTotalMilliAmpere(settings);
 }
 
-void Display::toSerial(const vector<bool>& indexes, const string& letters) const
+void Display::toSerial(const bitset<PIXELS>& indexes, const string& letters) const
 {
-    vector<bool> logicalIdxs(WIDTH * HEIGHT);
+    bitset<PIXELS> logicalIdxs(WIDTH * HEIGHT);
 
     for (auto ii = MIN_INDICATORS; ii < (PIXELS); ++ii) {
         logicalIdxs[physicalToIndex(ii)] = indexes[ii];

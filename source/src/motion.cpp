@@ -16,6 +16,7 @@ void Motion::reset()
     m_motion_captures.clear();
     m_capture_in_queue = false;
     m_last_capture = millis();
+    m_max_captures = 0;
     m_count_captures = 0;
 }
 

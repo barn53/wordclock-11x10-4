@@ -5,6 +5,7 @@
 
 using namespace std;
 
+extern time_t startTime;
 uint8_t Text::m_pixel_count = PIXELS;
 
 Text::Text(Settings& settings)
@@ -14,14 +15,7 @@ Text::Text(Settings& settings)
 
 void Text::clear()
 {
-    m_indexes.resize(PIXELS);
-    fill(m_indexes.begin(), m_indexes.end(), false);
-    m_bit_indexes.reset();
-}
-
-void Text::createText(string& text)
-{
-    m_language.createText(text, m_start_time);
+    m_indexes.reset();
 }
 
 void Text::indexesForWord(const string& word, size_t& displayIndex)
@@ -33,7 +27,6 @@ void Text::indexesForWord(const string& word, size_t& displayIndex)
         uint8_t wordSize(word.size());
         for (uint8_t ii = 0; ii < wordSize; ++ii) {
             m_indexes[Display::indexToPhysical(wordBeginIndex + ii)] = true;
-            m_bit_indexes[Display::indexToPhysical(wordBeginIndex + ii)] = true;
         }
         displayIndex = wordBeginIndex + wordSize;
     } else {
@@ -41,20 +34,12 @@ void Text::indexesForWord(const string& word, size_t& displayIndex)
     }
 }
 
-const vector<bool>& Text::indexesForText(const string& text)
+const bitset<PIXELS>& Text::indexesForText(const string& text)
 {
     m_last_text = text;
     m_changed = true;
     indexesForText(text, 0);
     return m_indexes;
-}
-
-const bitset<PIXELS>& Text::bitIndexesForText(const string& text)
-{
-    m_last_text = text;
-    m_changed = true;
-    indexesForText(text, 0);
-    return m_bit_indexes;
 }
 
 void Text::indexesForText(const string& text, uint8_t minIndicator)
@@ -76,18 +61,17 @@ void Text::indexesForText(const string& text, uint8_t minIndicator)
     }
     for (uint8_t ii = 0; ii < minIndicator; ++ii) {
         m_indexes[ii] = true;
-        m_bit_indexes[ii] = true;
     }
 }
 
-const vector<bool>& Text::indexesForCurrentTime()
+const bitset<PIXELS>& Text::indexesForCurrentTime()
 {
     string text;
     int hour;
     int minute;
     uint8_t minIndicator;
-    createText(text);
-    getHourMinuteForCurrentTimeFromStartTime(m_start_time, hour, minute);
+    m_language.createText(text, startTime);
+    getHourMinuteForCurrentTimeFromTime(startTime, hour, minute);
     minIndicator = minute % 5;
 
     if (text != m_last_text || minIndicator != m_last_min_indicator) {
@@ -113,8 +97,8 @@ void Text::print()
     int hour;
     int minute;
     uint8_t minIndicator;
-    createText(text);
-    getHourMinuteForCurrentTimeFromStartTime(m_start_time, hour, minute);
+    m_language.createText(text, startTime);
+    getHourMinuteForCurrentTimeFromTime(startTime, hour, minute);
     minIndicator = minute % 5;
     Serial.printf("%s + %u Minuten\n", text.c_str(), minIndicator);
 }
